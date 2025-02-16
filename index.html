@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=375px, initial-scale=1.0">
+<title>Digital Services</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+@keyframes ripple {
+from {
+width: 0px;
+height: 0px;
+opacity: 0.5;
+}
+to {
+width: 100px;
+height: 100px;
+opacity: 0;
+}
+}
+.form-input:focus {
+outline: none;
+border-color: #6366f1;
+box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+.service-card {
+transition: transform 0.2s ease-in-out;
+}
+.service-card:hover {
+transform: translateY(-4px);
+}
+.testimonial-content {
+transition: opacity 0.3s ease-in-out;
+}
+.fade-enter {
+opacity: 0;
+}
+.fade-enter-active {
+opacity: 1;
+}
+</style>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary: '#6366f1',
+secondary: '#4f46e5'
+},
+borderRadius: {
+'none': '0px',
+'sm': '4px',
+DEFAULT: '8px',
+'md': '12px',
+'lg': '16px',
+'xl': '20px',
+'2xl': '24px',
+'3xl': '32px',
+'full': '9999px',
+'button': '8px'
+}
+}
+}
+}
+</script>
+<script>
+const mockData = {
+services: [
+{
+icon: "ri-palette-line",
+title: "Graphic Design",
+desc: "Professional branding & visual identity solutions"
+},
+{
+icon: "ri-line-chart-line",
+title: "Digital Marketing",
+desc: "Data-driven SEO & marketing strategies"
+},
+{
+icon: "ri-video-line",
+title: "Video Editing",
+desc: "Engaging video content for all platforms"
+},
+{
+icon: "ri-article-line",
+title: "Content Writing",
+desc: "Compelling copy that converts"
+},
+{
+icon: "ri-code-line",
+title: "Web Development",
+desc: "Custom websites & e-commerce solutions"
+}
+],
+testimonials: [
+{
+name: "Emma Thompson",
+role: "Marketing Director",
+company: "TechVision Inc",
+content: "Outstanding service quality and professionalism. Highly recommended!",
+rating: 5
+},
+{
+name: "James Wilson",
+role: "CEO",
+company: "Growth Ventures",
+content: "Their team delivered beyond our expectations. Will definitely work with them again.",
+rating: 5
+}
+]
+};
+document.addEventListener('DOMContentLoaded', () => {
+const servicesContainer = document.getElementById('services-grid');
+mockData.services.forEach(service => {
+const serviceCard = document.createElement('div');
+serviceCard.className = 'bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-700';
+serviceCard.innerHTML = `
+<div class="w-12 h-12 mb-4 flex items-center justify-center bg-primary/10 rounded-lg">
+<i class="${service.icon} text-primary text-xl"></i>
+</div>
+<h3 class="text-lg font-semibold mb-2">${service.title}</h3>
+<p class="text-gray-400 text-sm">${service.desc}</p>
+`;
+servicesContainer.appendChild(serviceCard);
+});
+let currentTestimonialIndex = 0;
+const testimonialContent = document.getElementById('testimonial-content');
+const testimonialName = document.getElementById('testimonial-name');
+const testimonialRole = document.getElementById('testimonial-role');
+function updateTestimonial() {
+const testimonial = mockData.testimonials[currentTestimonialIndex];
+testimonialContent.textContent = testimonial.content;
+testimonialName.textContent = testimonial.name;
+testimonialRole.textContent = `${testimonial.role}, ${testimonial.company}`;
+}
+document.getElementById('prev-testimonial').addEventListener('click', () => {
+currentTestimonialIndex = (currentTestimonialIndex - 1 + mockData.testimonials.length) % mockData.testimonials.length;
+updateTestimonial();
+});
+document.getElementById('next-testimonial').addEventListener('click', () => {
+currentTestimonialIndex = (currentTestimonialIndex + 1) % mockData.testimonials.length;
+updateTestimonial();
+});
+updateTestimonial();
+});
+</script>
+</head>
+<body class="bg-gray-900 text-gray-100">
+<nav class="fixed top-0 w-full bg-gray-800 shadow-sm z-50">
+<div class="px-4 py-3 flex items-center justify-between">
+<h1 class="text-xl font-['Pacifico'] text-primary">Saheb Traders</h1>
+</div>
+</nav>
+<main class="pt-16 pb-20">
+<section class="px-4 py-8 bg-gradient-to-b from-primary/10 to-transparent">
+<h1 class="text-3xl font-bold mb-4 leading-tight">Grow Your Business with Our Expert Digital Services</h1>
+<p class="text-gray-400 mb-6">Transform your digital presence with our premium solutions</p>
+<button class="bg-primary text-white px-6 py-3 rounded-button font-medium shadow-lg hover:bg-primary/90 transition-colors">
+Get Started
+</button>
+</section>
+<section class="px-4 py-8">
+<h2 class="text-2xl font-semibold mb-6">Our Services</h2>
+<div id="services-grid" class="grid grid-cols-2 gap-4"></div>
+</section>
+<section class="px-4 py-8 bg-gray-800">
+<h2 class="text-2xl font-semibold mb-6">What Clients Say</h2>
+<div class="relative bg-gray-800 p-6 rounded-lg border border-gray-700">
+<p id="testimonial-content" class="text-gray-400 italic mb-4"></p>
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+<i class="ri-user-line text-primary"></i>
+</div>
+<div>
+<h4 id="testimonial-name" class="font-medium"></h4>
+<p id="testimonial-role" class="text-sm text-gray-400"></p>
+</div>
+</div>
+<div class="absolute bottom-4 right-4 flex gap-2">
+<button id="prev-testimonial" class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full shadow text-gray-300">
+<i class="ri-arrow-left-s-line"></i>
+</button>
+<button id="next-testimonial" class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full shadow text-gray-300">
+<i class="ri-arrow-right-s-line"></i>
+</button>
+</div>
+</div>
+</section>
+<section class="px-4 py-8">
+<h2 class="text-2xl font-semibold mb-6">Contact Us</h2>
+<form class="space-y-4" onsubmit="handleSubmit(event)">
+<div>
+<label class="block text-sm font-medium text-gray-300 mb-1">Name</label>
+<input type="text" class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-100" placeholder="Your name">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+<input type="email" class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-100" placeholder="your@email.com">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-300 mb-1">Message</label>
+<textarea class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-100 h-24" placeholder="How can we help?"></textarea>
+</div>
+<button type="submit" class="w-full bg-primary text-white px-6 py-3 rounded-button font-medium shadow-lg hover:bg-primary/90 transition-colors">
+Send Message
+</button>
+</form>
+</section>
+</main>
+<nav class="fixed bottom-0 w-full bg-gray-800 border-t border-gray-700">
+<div class="grid grid-cols-4 h-16">
+<a href="#" class="flex flex-col items-center justify-center text-primary" onclick="switchTab(this, 'home')">
+<i class="ri-home-fill text-lg"></i>
+<span class="text-xs mt-1">Home</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center text-gray-400" onclick="switchTab(this, 'services')">
+<i class="ri-apps-line text-lg"></i>
+<span class="text-xs mt-1">Services</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center text-gray-400" onclick="switchTab(this, 'portfolio')">
+<i class="ri-gallery-line text-lg"></i>
+<span class="text-xs mt-1">Portfolio</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center text-gray-400" onclick="switchTab(this, 'profile')">
+<i class="ri-user-line text-lg"></i>
+<span class="text-xs mt-1">Profile</span>
+</a>
+</div>
+</nav>
+<script>
+function switchTab(element, tab) {
+// Remove active state from all tabs
+document.querySelectorAll('nav a').forEach(a => {
+a.classList.remove('text-primary');
+a.classList.add('text-gray-400');
+const icon = a.querySelector('i');
+if(icon) {
+icon.className = icon.className.replace('-fill', '-line');
+}
+});
+// Add ripple effect
+const ripple = document.createElement('div');
+ripple.className = 'ripple';
+ripple.style.position = 'absolute';
+ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+ripple.style.borderRadius = '50%';
+ripple.style.pointerEvents = 'none';
+ripple.style.width = '100px';
+ripple.style.height = '100px';
+ripple.style.transform = 'translate(-50%, -50%)';
+ripple.style.animation = 'ripple 0.6s linear';
+element.style.position = 'relative';
+element.appendChild(ripple);
+setTimeout(() => {
+ripple.remove();
+}, 600);
+// Hide all sections
+document.querySelectorAll('section').forEach(section => {
+section.style.display = 'none';
+});
+// Add active state to clicked tab
+element.classList.remove('text-gray-400');
+element.classList.add('text-primary');
+const icon = element.querySelector('i');
+if(icon) {
+icon.className = icon.className.replace('-line', '-fill');
+}
+// Show corresponding content
+switch(tab) {
+case 'home':
+document.querySelectorAll('section').forEach(section => {
+if(section.classList.contains('profile-section') || section.querySelector('.grid-cols-2.gap-4')) {
+section.style.display = 'none';
+} else {
+section.style.display = 'block';
+}
+});
+window.scrollTo({top: 0, behavior: 'smooth'});
+break;
+case 'services':
+document.querySelector('section:nth-child(2)').style.display = 'block';
+document.querySelector('#services-grid').scrollIntoView({behavior: 'smooth'});
+break;
+case 'portfolio':
+const portfolioSection = document.createElement('section');
+portfolioSection.className = 'px-4 py-8';
+portfolioSection.innerHTML = `
+<h2 class="text-2xl font-semibold mb-6">Our Portfolio</h2>
+<div class="grid grid-cols-2 gap-4">
+${Array(6).fill().map(() => `
+<div class="relative aspect-square rounded-lg overflow-hidden">
+<img src="https://public.readdy.ai/ai/img_res/2566e31af28d26a688a3cdc9c3778cfc.jpg"
+class="w-full h-full object-cover" alt="Portfolio item">
+<div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+<span class="text-sm font-medium text-white">View Project</span>
+</div>
+</div>
+`).join('')}
+</div>
+`;
+document.querySelector('main').appendChild(portfolioSection);
+portfolioSection.scrollIntoView({behavior: 'smooth'});
+break;
+case 'profile':
+const profileSection = document.createElement('section');
+profileSection.className = 'px-4 py-8 profile-section';
+profileSection.innerHTML = `
+<div class="bg-gray-800 rounded-lg p-6 space-y-6">
+<div class="flex items-center space-x-4">
+<div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
+<i class="ri-user-fill text-primary text-3xl"></i>
+</div>
+<div>
+<h3 class="text-xl font-semibold">John Anderson</h3>
+<p class="text-gray-400">Digital Marketing Specialist</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center space-x-2">
+<i class="ri-mail-line text-gray-400"></i>
+<span>john.anderson@example.com</span>
+</div>
+<div class="flex items-center space-x-2">
+<i class="ri-phone-line text-gray-400"></i>
+<span>+1 234 567 8900</span>
+</div>
+<div class="flex items-center space-x-2">
+<i class="ri-map-pin-line text-gray-400"></i>
+<span>New York, USA</span>
+</div>
+</div>
+<div class="pt-4 border-t border-gray-700">
+<h4 class="text-lg font-medium mb-3">Account Settings</h4>
+<div class="space-y-3">
+<button class="w-full flex items-center justify-between px-4 py-2 bg-gray-700 rounded-lg">
+<span>Edit Profile</span>
+<i class="ri-arrow-right-s-line"></i>
+</button>
+<button class="w-full flex items-center justify-between px-4 py-2 bg-gray-700 rounded-lg">
+<span>Notifications</span>
+<i class="ri-arrow-right-s-line"></i>
+</button>
+<button class="w-full flex items-center justify-between px-4 py-2 bg-gray-700 rounded-lg">
+<span>Privacy Settings</span>
+<i class="ri-arrow-right-s-line"></i>
+</button>
+<button class="w-full flex items-center justify-between px-4 py-2 bg-red-900/50 text-red-400 rounded-lg">
+<span>Logout</span>
+<i class="ri-logout-box-r-line"></i>
+</button>
+</div>
+</div>
+</div>
+`;
+document.querySelector('main').appendChild(profileSection);
+profileSection.scrollIntoView({behavior: 'smooth'});
+break;
+}
+}
+// Initialize to show all sections on first load
+document.addEventListener('DOMContentLoaded', () => {
+document.querySelectorAll('section').forEach(section => {
+section.style.display = 'block';
+});
+});
+<script>
+function toggleMenu() {
+const menuOptions = document.getElementById('menu-options');
+menuOptions.classList.toggle('hidden');
+// Close menu when clicking outside
+document.addEventListener('click', function closeMenu(e) {
+if (!e.target.closest('#menu-options') && !e.target.closest('button')) {
+menuOptions.classList.add('hidden');
+document.removeEventListener('click', closeMenu);
+}
+});
+}
+function handleSubmit(event) {
+event.preventDefault();
+const formData = new FormData(event.target);
+const data = Object.fromEntries(formData);
+const toast = document.createElement('div');
+toast.className = 'fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg';
+toast.textContent = 'Message sent successfully!';
+document.body.appendChild(toast);
+setTimeout(() => {
+toast.remove();
+}, 3000);
+event.target.reset();
+}
+document.querySelectorAll('.service-card').forEach(card => {
+card.addEventListener('click', () => {
+const serviceTitle = card.querySelector('h3').textContent;
+const previousWorks = {
+'Graphic Design': [
+{ title: 'Brand Identity Redesign', client: 'TechCorp Solutions', image: 'https://public.readdy.ai/ai/img_res/f24868565c5896f36f6979371a7279bc.jpg' },
+{ title: 'Marketing Collateral', client: 'Wellness Spa', image: 'https://public.readdy.ai/ai/img_res/2c8421756b5e81b50c4e4a05e4d3e1b3.jpg' }
+],
+'Digital Marketing': [
+{ title: 'SEO Campaign', client: 'E-commerce Store', image: 'https://public.readdy.ai/ai/img_res/216b8e731245ae0ed0d2091be691a9a0.jpg' },{ title: 'Social Media Strategy', client: 'Fashion Brand', image: 'https://public.readdy.ai/ai/img_res/21f202b32823cb3a14043bd95f1c8194.jpg' }],
+'Video Editing': [
+{ title: 'Product Launch Video', client: 'Tech Startup', image: 'https://public.readdy.ai/ai/img_res/88330dd5d63cc5c75cd39691b82097cb.jpg' },
+{ title: 'Corporate Documentary', client: 'Manufacturing Co.', image: 'https://public.readdy.ai/ai/img_res/4304d7ea160ec7af4ca6fbc56164a5cd.jpg' }],
+'Content Writing': [
+{ title: 'Website Copy', client: 'Financial Services', image: 'https://public.readdy.ai/ai/img_res/f7574f78ac5dfb05714bf9fc486debb2.jpg' },
+{ title: 'Blog Series', client: 'Health & Wellness', image: 'https://public.readdy.ai/ai/img_res/d1d506cf9c9442aab83902d46515d259.jpg' }
+],
+'Web Development': [
+{ title: 'E-commerce Platform', client: 'Retail Chain', image: 'https://public.readdy.ai/ai/img_res/34b4490f4c48a394cabf96da2535b32c.jpg' },
+{ title: 'Corporate Website', client: 'Law Firm', image: 'https://public.readdy.ai/ai/img_res/65d187cbc2d6d4e8fd996cbde658fc19.jpg' }
+]
+};
+const works = previousWorks[serviceTitle] || [];
+const phoneNumber = "+919876543210"; // Replace with your actual WhatsApp number
+const modal = document.createElement('div');
+modal.className = 'fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 overflow-y-auto';
+modal.innerHTML = `
+<div class="bg-gray-800 p-6 rounded-lg w-full max-w-2xl">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-xl font-semibold">${serviceTitle} - Previous Work</h3>
+<button class="text-gray-400 hover:text-white">
+<i class="ri-close-line text-xl"></i>
+</button>
+</div>
+<div class="space-y-6">
+${works.map(work => `
+<div class="bg-gray-700 rounded-lg overflow-hidden group relative">
+<img src="${work.image}" alt="${work.title}" class="w-full h-48 object-cover">
+<div class="p-4">
+<h4 class="font-semibold mb-1">${work.title}</h4>
+<p class="text-sm text-gray-400">Client: ${work.client}</p>
+</div>
+<div class="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<a href="https://wa.me/${phoneNumber}?text=Hi, I'm interested in your ${serviceTitle} service. I saw your work on ${work.title} for ${work.client}."
+target="_blank"
+class="bg-[#25D366] text-white px-4 py-2 rounded-button flex items-center gap-2 hover:bg-[#25D366]/90">
+<i class="ri-whatsapp-fill"></i>
+Inquire about this project
+</a>
+</div>
+</div>
+`).join('')}
+</div>
+<div class="mt-6 flex justify-end gap-4">
+<a href="https://wa.me/+919876543210" target="_blank" class="bg-[#25D366] text-white px-6 py-3 rounded-button hover:bg-[#25D366]/90 transition-colors flex items-center gap-2">
+<i class="ri-whatsapp-fill text-xl"></i>
+Contact on WhatsApp
+</a>
+</div>
+</div>
+`;
+const closeBtn = modal.querySelector('button');
+closeBtn.addEventListener('click', () => modal.remove());
+modal.addEventListener('click', (e) => {
+if (e.target === modal) {
+modal.remove();
+}
+});
+document.body.appendChild(modal);
+});
+});
+</script>
+</body>
+</html>
